@@ -1,0 +1,61 @@
+
+<!DOCTYPE html>
+<!--
+Created using JS Bin
+http://jsbin.com
+
+Copyright (c) 2015 by octavioturra (http://jsbin.com/xoyolo/2/edit)
+
+Released under the MIT license: http://jsbin.mit-license.org
+-->
+<meta name="robots" content="noindex">
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS Bin</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src *; style-src * 'unsafe-inline'; script-src * 'unsafe-inline' 'unsafe-eval'"/>
+
+<style id="jsbin-css">
+button{
+  width:90%;
+  margin:5%;
+  padding:5%;
+  background: maroon;
+  border:none;
+  box-shadow: 3px 3px 20px lightgray;
+  font-size: 22px;
+  color: white;
+  text-shadow: 0px -2px 0px black
+}
+</style>
+</head>
+<body>
+  <button id="notifique">
+    me notifique
+  </button>
+<script id="jsbin-javascript">
+function notification(){
+  Notification.requestPermission(function(result) {
+    if (result === 'granted') {
+      navigator.serviceWorker.ready.then(function(registration) {
+        registration.showNotification('Vibration Sample', {
+          body: 'Buzz! Buzz!',
+          icon: '../images/touch/chrome-touch-icon-192x192.png',
+          vibrate: [200, 100, 200, 100, 200, 100, 200],
+          tag: 'vibration-sample'
+        });
+      });
+    }
+  });
+}
+function notifyMe() {
+  navigator.serviceWorker.register('https://cdn.rawgit.com/octavioturra/simple-worker/master/sw.js');
+  notification();
+}
+document.querySelector('#notifique').addEventListener('click', function(){
+ window.navigator.vibrate([100]);
+  notifyMe();
+});
+</script>
+</body>
+</html>
